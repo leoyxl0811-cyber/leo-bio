@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEO.DEV · 于晓亮 Leo</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0a0f; color: #fff; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        nav { position: fixed; top: 0; width: 100%; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); padding: 15px 0; z-index: 100; border-bottom: 1px solid rgba(0,255,136,0.2); }
+        nav .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: #00ff88; text-shadow: 0 0 20px rgba(0,255,136,0.5); }
+        .nav-links a { color: #888; text-decoration: none; margin-left: 30px; transition: all 0.3s; }
+        .nav-links a:hover { color: #00ff88; }
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; overflow: hidden; }
+        .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, rgba(0,255,136,0.1) 0%, transparent 70%); }
+        .hero-content { position: relative; z-index: 1; }
+        .hero h1 { font-size: 4rem; margin-bottom: 10px; background: linear-gradient(135deg, #00ff88, #00d4ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero .subtitle { font-size: 1.5rem; color: #888; margin-bottom: 30px; }
+        .hero .tagline { font-size: 1.2rem; color: #666; margin-bottom: 20px; }
+        .hero .quote { font-size: 1rem; color: #00ff88; font-style: italic; opacity: 0.8; }
+        .stats { display: flex; justify-content: center; gap: 60px; margin-top: 60px; }
+        .stat { text-align: center; }
+        .stat-number { font-size: 3rem; font-weight: 700; color: #00ff88; }
+        .stat-label { color: #666; font-size: 0.9rem; }
+        section { padding: 100px 0; }
+        .section-title { font-size: 2rem; margin-bottom: 50px; text-align: center; color: #00ff88; }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .about-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 30px; transition: all 0.3s; }
+        .about-card:hover { transform: translateY(-5px); border-color: rgba(0,255,136,0.5); box-shadow: 0 10px 40px rgba(0,255,136,0.1); }
+        .about-card h3 { color: #00ff88; margin-bottom: 15px; font-size: 1.1rem; }
+        .about-card p { color: #aaa; font-size: 0.95rem; }
+        .timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .timeline::before { content: ''; position: absolute; left: 50%; width: 2px; height: 100%; background: linear-gradient(to bottom, #00ff88, #00d4ff); transform: translateX(-50%); }
+        .timeline-item { display: flex; margin-bottom: 50px; position: relative; }
+        .timeline-item:nth-child(odd) { justify-content: flex-start; padding-right: calc(50% + 30px); text-align: right; }
+        .timeline-item:nth-child(even) { justify-content: flex-end; padding-left: calc(50% + 30px); text-align: left; }
+        .timeline-dot { position: absolute; left: 50%; width: 16px; height: 16px; background: #00ff88; border-radius: 50%; transform: translateX(-50%); box-shadow: 0 0 20px rgba(0,255,136,0.5); }
+        .timeline-content { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 20px; }
+        .timeline-content h4 { color: #00ff88; margin-bottom: 5px; }
+        .timeline-content .date { color: #666; font-size: 0.85rem; margin-bottom: 10px; }
+        .timeline-content p { color: #aaa; font-size: 0.9rem; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .tool-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 25px; transition: all 0.3s; cursor: pointer; }
+        .tool-card:hover { border-color: #00ff88; transform: translateY(-3px); }
+        .tool-icon { font-size: 2rem; margin-bottom: 15px; }
+        .tool-card h4 { color: #fff; margin-bottom: 10px; }
+        .tool-card p { color: #888; font-size: 0.9rem; }
+        footer { text-align: center; padding: 50px 0; border-top: 1px solid rgba(255,255,255,0.1); color: #666; }
+        footer a { color: #00ff88; text-decoration: none; }
+        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } .stats { flex-direction: column; gap: 30px; } .timeline::before { left: 20px; } .timeline-item { flex-direction: column; padding: 0 0 0 50px !important; text-align: left !important; } .timeline-dot { left: 20px; } }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">LEO.DEV</div>
+            <div class="nav-links">
+                <a href="#about">关于我</a>
+                <a href="#responsibilities">职责</a>
+                <a href="#life">人生</a>
+                <a href="#tools">百宝箱</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>于晓亮 Leo Yu</h1>
+            <p class="subtitle">CEO办公室 | 战略执行与大项目管理</p>
+            <p class="tagline">WELCOME TO MY UNIVERSE</p>
+            <p class="quote">"博观而约取，厚积而薄发"</p>
+            <p style="color:#666;margin-top:15px;">从会计到战略，从执行到创新，用数字化能力驱动企业未来</p>
+            <div class="stats">
+                <div class="stat"><div class="stat-number">10+</div><div class="stat-label">年从业经验</div></div>
+                <div class="stat"><div class="stat-number">4</div><div class="stat-label">家上市公司</div></div>
+                <div class="stat"><div class="stat-number">2</div><div class="stat-label">个硕士学位</div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title">关于我</h2>
+            <div class="about-grid">
+                <div class="about-card"><h3>📍 位置</h3><p>中国 · 南京</p></div>
+                <div class="about-card"><h3>🎓 教育</h3><p>Deakin University<br>商学硕士 + 专业会计硕士</p></div>
+                <div class="about-card"><h3>💼 经历</h3><p>天泽信息 → 博创联动<br>联成科技 → 亚信安全</p></div>
+                <div class="about-card"><h3">🎯 爱好</h3><p>AI工具探索 · 数字化转型<br>战略规划 · 项目管理</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="responsibilities">
+        <div class="container">
+            <h2 class="section-title">我的职责</h2>
+            <div class="about-grid">
+                <div class="about-card"><h3>🏢 战略管理</h3><p>协助制定公司战略，监督战略执行，确保目标达成</p></div>
+                <div class="about-card"><h3>📋 项目管理</h3><p>主导重大战略级项目，推动跨部门协同</p></div>
+                <div class="about-card"><h3">🤖 AI驱动</h3><p>探索AI工具在企业中的应用，提升组织效率</p></div>
+                <div class="about-card"><h3>📊 数字化转型</h3><p>推动公司数字化建设，赋能业务发展</p></div>
+                <div class="about-card"><h3>🎓 知识管理</h3><p>沉淀组织智慧，建立知识共享平台</p></div>
+                <div class="about-card"><h3>📈 经营分析</h3><p>数据分析支持，为决策提供依据</p></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="life">
+        <div class="container">
+            <h2 class="section-title">我的人生</h2>
+            <div class="timeline">
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>大连</h4><div class="date">起点</div><p>梦开始的地方</p></div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>Deakin University</h4><div class="date">留学深造</div><p>获得商学硕士+专业会计硕士双学位</p></div></div>
+                <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><h4>南京</h4><div class="date">现在</div><p>深耕企业数字化与战略执行</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tools">
+        <div class="container">
+            <h2 class="section-title">百宝箱</h2>
+            <div class="tools-grid">
+                <div class="tool-card"><div class="tool-icon">📚</div><h4>知识库任意门</h4><p>亚信安全制度发布平台、公司战略目标及经营策略</p></div>
+                <div class="tool-card"><div class="tool-icon">🤖</div><h4>AI狂热俱乐部</h4><p>Midjourney、ChatGPT等AI工具培训教程</p></div>
+                <div class="tool-card"><div class="tool-icon">🎯</div><h4>销售方法论</h4><p>销售单位成功方法论——马七条、人才画像</p></div>
+                <div class="tool-card"><div class="tool-icon">📊</div><h4>BI数字化</h4><p>从数字化到数智化，用数据驱动业务决策</p></div>
+                <div class="tool-card"><div class="tool-icon">🎨</div><h4>设计资源</h4><p>色彩搭配、潘通年度代表色、设计规范</p></div>
+                <div class="tool-card"><div class="tool-icon">📽️</div><h4>公司介绍</h4><p>亚信安全公司介绍PPT（深色/浅色版本）</p></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>DESIGNED BY <a href="#">WORKBUDDY AI</a> · 于晓亮 Leo Yu</p>
+        </div>
+    </footer>
+</body>
+</html>
