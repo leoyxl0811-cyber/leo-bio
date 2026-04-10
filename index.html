@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>于晓亮 Leo - AI先锋介绍</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #00f0ff;
+            --secondary: #ff00ff;
+            --accent: #7b2fff;
+            --dark: #0a0a1a;
+            --glow: rgba(0, 240, 255, 0.5);
+        }
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--dark);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        .bg-grid {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, rgba(0,240,255,0.03) 1px, transparent 1px),
+                        linear-gradient(rgba(0,240,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
+        }
+        @keyframes gridMove {
+            0% { transform: perspective(500px) rotateX(60deg) translateY(0); }
+            100% { transform: perspective(500px) rotateX(60deg) translateY(50px); }
+        }
+        .particles { position: fixed; width: 100%; height: 100%; z-index: -1; }
+        .particle {
+            position: absolute; width: 4px; height: 4px;
+            background: var(--primary); border-radius: 50%;
+            animation: float 15s infinite; opacity: 0.6;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); opacity: 0; }
+            10% { opacity: 0.6; } 90% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
+        }
+        nav {
+            position: fixed; top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(10, 10, 26, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 240, 255, 0.2);
+            z-index: 1000;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif; font-size: 1.5rem; font-weight: 900;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .nav-links { display: flex; gap: 40px; }
+        .nav-links a {
+            color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.9rem;
+            transition: all 0.3s; position: relative;
+        }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 20px var(--glow); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 120px 50px 50px; }
+        .hero {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+            align-items: center; min-height: 90vh; padding: 80px 0;
+        }
+        .hero-content { animation: slideIn 1s ease-out; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .greeting {
+            font-family: 'Orbitron', sans-serif; font-size: 1rem;
+            color: var(--primary); letter-spacing: 5px; margin-bottom: 20px;
+            animation: glitch 3s infinite;
+        }
+        @keyframes glitch {
+            0%, 90%, 100% { text-shadow: none; }
+            92% { text-shadow: -2px 0 var(--secondary), 2px 0 var(--primary); }
+            94% { text-shadow: 2px 0 var(--secondary), -2px 0 var(--primary); }
+        }
+        .name {
+            font-family: 'Orbitron', sans-serif; font-size: 4rem; font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; line-height: 1.2;
+        }
+        .title { font-size: 1.5rem; color: rgba(255,255,255,0.6); margin-bottom: 30px; }
+        .title span { color: var(--primary); }
+        .tagline {
+            font-size: 1.2rem; color: rgba(255,255,255,0.8); line-height: 1.8;
+            padding-left: 20px; border-left: 3px solid var(--primary); margin-bottom: 40px;
+        }
+        .stats { display: flex; gap: 50px; }
+        .stat { text-align: center; }
+        .stat-value {
+            font-family: 'Orbitron', sans-serif; font-size: 2.5rem; font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .stat-label { font-size: 0.85rem; color: rgba(255,255,255,0.5); margin-top: 5px; }
+        .avatar-container {
+            position: relative; display: flex; justify-content: center; align-items: center;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        .avatar-ring {
+            position: absolute; width: 400px; height: 400px; border-radius: 50%;
+            border: 2px solid transparent;
+            background: linear-gradient(var(--dark), var(--dark)) padding-box,
+                        linear-gradient(135deg, var(--primary), var(--secondary), var(--accent)) border-box;
+            animation: rotate 10s linear infinite;
+        }
+        .avatar-ring:nth-child(2) {
+            width: 450px; height: 450px; animation-duration: 15s;
+            animation-direction: reverse; border-width: 1px;
+        }
+        .avatar-ring:nth-child(3) {
+            width: 500px; height: 500px; animation-duration: 20s; border-style: dashed;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .avatar-initial {
+            width: 350px; height: 350px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Orbitron', sans-serif; font-size: 8rem; font-weight: 900;
+            color: var(--dark); border: 4px solid var(--primary);
+            box-shadow: 0 0 60px var(--glow), 0 0 100px rgba(0, 240, 255, 0.3),
+                        inset 0 0 60px rgba(0, 240, 255, 0.1);
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 60px var(--glow), 0 0 100px rgba(0, 240, 255, 0.3); }
+            50% { box-shadow: 0 0 80px var(--glow), 0 0 150px rgba(0, 240, 255, 0.5); }
+        }
+        .section { padding: 100px 0; }
+        .section-title {
+            font-family: 'Orbitron', sans-serif; font-size: 2.5rem; text-align: center;
+            margin-bottom: 60px; position: relative;
+        }
+        .section-title::before {
+            content: attr(data-text); position: absolute; left: 50%; transform: translateX(-50%);
+            font-size: 3rem; color: rgba(0, 240, 255, 0.1); z-index: -1;
+        }
+        .section-title span { color: var(--primary); }
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .info-card {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 20px; padding: 30px; transition: all 0.5s;
+            position: relative; overflow: hidden;
+        }
+        .info-card::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        .info-card:hover::before { left: 100%; }
+        .info-card:hover {
+            transform: translateY(-10px); border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(0, 240, 255, 0.2);
+        }
+        .info-icon { font-size: 3rem; margin-bottom: 20px; }
+        .info-label {
+            font-size: 0.9rem; color: var(--primary); margin-bottom: 10px;
+            font-family: 'Orbitron', sans-serif; letter-spacing: 2px;
+        }
+        .info-value { font-size: 1.3rem; font-weight: 700; }
+        .responsibilities { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px; }
+        .duty-card {
+            background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(123, 47, 255, 0.1));
+            border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 15px;
+            padding: 30px; position: relative; overflow: hidden;
+        }
+        .duty-card::after {
+            content: ''; position: absolute; top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 0%, transparent 70%);
+            animation: rotateSlow 20s linear infinite;
+        }
+        @keyframes rotateSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .duty-title {
+            font-family: 'Orbitron', sans-serif; font-size: 1.2rem; color: var(--primary);
+            margin-bottom: 15px; position: relative; z-index: 1;
+        }
+        .duty-desc { color: rgba(255,255,255,0.8); line-height: 1.8; position: relative; z-index: 1; }
+        .life-timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .life-timeline::before {
+            content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            transform: translateX(-50%);
+        }
+        .life-item { position: relative; margin-bottom: 60px; display: flex; align-items: center; }
+        .life-item:nth-child(odd) { flex-direction: row-reverse; }
+        .life-item:nth-child(odd) .life-content { text-align: right; padding-right: 60px; padding-left: 0; }
+        .life-item:nth-child(even) .life-content { padding-left: 60px; }
+        .life-dot {
+            position: absolute; left: 50%; transform: translateX(-50%);
+            width: 20px; height: 20px; background: var(--primary); border-radius: 50%;
+            box-shadow: 0 0 20px var(--glow); z-index: 1;
+        }
+        .life-content { width: 50%; }
+        .life-year { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: var(--secondary); margin-bottom: 10px; }
+        .life-text { color: rgba(255,255,255,0.8); line-height: 1.8; font-style: italic; }
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .resource-card {
+            background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 15px; padding: 25px; transition: all 0.3s; cursor: pointer;
+        }
+        .resource-card:hover {
+            background: rgba(0, 240, 255, 0.1); transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(0, 240, 255, 0.2);
+        }
+        .resource-icon { font-size: 2.5rem; margin-bottom: 15px; }
+        .resource-title { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: #fff; margin-bottom: 10px; }
+        .resource-desc { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+        footer { text-align: center; padding: 50px; border-top: 1px solid rgba(0, 240, 255, 0.2); margin-top: 100px; }
+        .footer-text { font-family: 'Orbitron', sans-serif; color: rgba(255,255,255,0.5); font-size: 0.9rem; }
+        .footer-text span { color: var(--primary); }
+        .scanline {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.1) 0px, rgba(0, 0, 0, 0.1) 1px, transparent 1px, transparent 2px);
+            pointer-events: none; z-index: 9999; opacity: 0.3;
+        }
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; text-align: center; }
+            .name { font-size: 3rem; }
+            .tagline { border-left: none; border-top: 3px solid var(--primary); padding-left: 0; padding-top: 20px; }
+            .stats { justify-content: center; }
+            .avatar-container { order: -1; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 15px 20px; }
+            .nav-links { display: none; }
+            .container { padding: 100px 20px 50px; }
+            .name { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="scanline"></div>
+    <div class="particles" id="particles"></div>
+
+    <nav>
+        <div class="logo">LEO.DEV</div>
+        <div class="nav-links">
+            <a href="#about">关于我</a>
+            <a href="#role">职责</a>
+            <a href="#life">人生</a>
+            <a href="#resources">百宝箱</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="hero">
+            <div class="hero-content">
+                <div class="greeting">WELCOME TO MY UNIVERSE</div>
+                <h1 class="name">于晓亮<br>Leo Yu</h1>
+                <div class="title">CEO办公室 | <span>战略执行与大项目管理</span></div>
+                <p class="tagline">
+                    博观而约取，厚积而薄发。<br>
+                    从会计到战略，从执行到创新，用数字化能力驱动企业未来。
+                </p>
+                <div class="stats">
+                    <div class="stat"><div class="stat-value">10+</div><div class="stat-label">年从业经验</div></div>
+                    <div class="stat"><div class="stat-value">4家</div><div class="stat-label">上市公司</div></div>
+                    <div class="stat"><div class="stat-value">2个</div><div class="stat-label">硕士学位</div></div>
+                </div>
+            </div>
+            <div class="avatar-container">
+                <div class="avatar-ring"></div>
+                <div class="avatar-ring"></div>
+                <div class="avatar-ring"></div>
+                <div class="avatar-initial">L</div>
+            </div>
+        </section>
+
+        <section class="section" id="about">
+            <h2 class="section-title" data-text="ABOUT ME"><span>关于</span> 我</h2>
+            <div class="about-grid">
+                <div class="info-card">
+                    <div class="info-icon">📍</div>
+                    <div class="info-label">办公位置</div>
+                    <div class="info-value">南京东久创新中心1栋4楼</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🎓</div>
+                    <div class="info-label">教育背景</div>
+                    <div class="info-value">Deakin University<br>商学硕士 · 专业会计硕士</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🏢</div>
+                    <div class="info-label">从业经历</div>
+                    <div class="info-value">天泽信息 → 博创联动<br>→ 联成科技 → 亚信安全</div>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🏀</div>
+                    <div class="info-label">兴趣爱好</div>
+                    <div class="info-value">篮球 · 徒步 · 美食 · 乐高</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="role">
+            <h2 class="section-title" data-text="RESPONSIBILITIES"><span>我的</span> 职责</h2>
+            <div class="responsibilities">
+                <div class="duty-card">
+                    <div class="duty-title">战略目标管理</div>
+                    <div class="duty-desc">公司级战略目标的制定与分解，推动各业务单元年度经营计划和战略重点举措工作落地</div>
+                </div>
+                <div class="duty-card">
+                    <div class="duty-title">数字化支撑</div>
+                    <div class="duty-desc">协助CEO落实公司经营策略，数字化工具支撑保障及业务流程优化</div>
+                </div>
+                <div class="duty-card">
+                    <div class="duty-title">项目管理</div>
+                    <div class="duty-desc">公司级战略项目的EMT资源协调、项目跟踪与服务保障</div>
+                </div>
+                <div class="duty-card">
+                    <div class="duty-title">会议支撑</div>
+                    <div class="duty-desc">负责支撑EMT、OTeam会议，并跟踪会议决议的有效执行</div>
+                </div>
+                <div class="duty-card">
+                    <div class="duty-title">BI系统</div>
+                    <div class="duty-desc">公司级BI系统开发、数据治理、各业务单元数据分析及BI看板协同开发</div>
+                </div>
+                <div class="duty-card">
+                    <div class="duty-title">客户接待</div>
+                    <div class="duty-desc">公司重要客户来访会务接待、展厅讲解</div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="life">
+            <h2 class="section-title" data-text="MY LIFE"><span>我的</span> 人生</h2>
+            <div class="life-timeline">
+                <div class="life-item">
+                    <div class="life-dot"></div>
+                    <div class="life-content">
+                        <div class="life-year">大连 · 起点</div>
+                        <div class="life-text">寻梦启航前，停靠在一个叫做大连的港湾，囤积寄养，湾内试航...</div>
+                    </div>
+                </div>
+                <div class="life-item">
+                    <div class="life-dot"></div>
+                    <div class="life-content">
+                        <div class="life-year">澳洲 · 留学</div>
+                        <div class="life-text">南下的洋流，微涩的海风，泛红的脸颊——我的小船驶入了澳洲</div>
+                    </div>
+                </div>
+                <div class="life-item">
+                    <div class="life-dot"></div>
+                    <div class="life-content">
+                        <div class="life-year">归来 · 南京</div>
+                        <div class="life-text">沿着凹凸的城墙，顺着龙藏浦的秀丽——我的小船回家了</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="resources">
+            <h2 class="section-title" data-text="RESOURCES"><span>百宝</span>箱</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">📚</div>
+                    <div class="resource-title">知识库任意门</div>
+                    <div class="resource-desc">亚信安全制度发布平台、公司战略目标及经营策略</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🤖</div>
+                    <div class="resource-title">AI狂热俱乐部</div>
+                    <div class="resource-desc">Midjourney、ChatGPT等AI工具培训教程</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🎯</div>
+                    <div class="resource-title">销售方法论</div>
+                    <div class="resource-desc">销售单位成功方法论——马七条、人才画像</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">📊</div>
+                    <div class="resource-title">BI数字化</div>
+                    <div class="resource-desc">从数字化到数智化，用数据驱动业务决策</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🎨</div>
+                    <div class="resource-title">设计资源</div>
+                    <div class="resource-desc">色彩搭配、潘通年度代表色、设计规范</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">📽️</div>
+                    <div class="resource-title">公司介绍</div>
+                    <div class="resource-desc">亚信安全公司介绍PPT（深色/浅色版本）</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p class="footer-text">DESIGNED BY <span>WORKBUDDY AI</span> · 于晓亮 Leo Yu</p>
+    </footer>
+
+    <script>
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+            particlesContainer.appendChild(particle);
+        }
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.info-card, .duty-card, .resource-card, .life-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
